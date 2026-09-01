@@ -1,0 +1,12 @@
+﻿# Python
+__pycache__/
+*.pyc
+venv/
+env/
+
+# Flask instance data (contains the SQLite DB with real user data)
+instance/
+
+# Editor/OS
+.vscode/
+.DS_Store

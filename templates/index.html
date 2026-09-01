@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+{% block title %}Vaultline — Secure Login System{% endblock %}
+{% block content %}
+<div class="page">
+  <section class="hero">
+    <div>
+      <div class="hero__eyebrow">SECURE LOGIN SYSTEM · PROJECT 4</div>
+      <h1>Login, protected like a vault.</h1>
+      <p>
+        A reference implementation of account security done right: salted &amp; hashed
+        passwords, input validation, session-based auth, and one-tap two-factor login.
+      </p>
+      <div class="hero__ctas">
+        <a href="{{ url_for('register') }}" class="btn">Create an account</a>
+        <a href="{{ url_for('login') }}" class="btn--ghost btn">Log in</a>
+      </div>
+    </div>
+    <div>
+      <svg class="lockface" viewBox="0 0 320 320" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="160" cy="160" r="150" stroke="#274752" stroke-width="1"/>
+        <circle cx="160" cy="160" r="110" stroke="#274752" stroke-width="1"/>
+        <rect x="100" y="140" width="120" height="90" rx="10" fill="#12303A" stroke="#C9A15A" stroke-width="2"/>
+        <path d="M120 140V110a40 40 0 0 1 80 0v30" stroke="#C9A15A" stroke-width="2" fill="none"/>
+        <circle cx="160" cy="178" r="10" fill="#C9A15A"/>
+        <rect x="156" y="185" width="8" height="20" rx="3" fill="#C9A15A"/>
+      </svg>
+    </div>
+  </section>
+
+  <section class="features">
+    <h2>What's under the hood</h2>
+    <div class="feature-grid">
+      <div class="feature">
+        <h3>Hashed, never stored plain</h3>
+        <p>Passwords are salted and hashed with bcrypt (12 rounds) before they ever touch the database.</p>
+      </div>
+      <div class="feature">
+        <h3>Validated at the door</h3>
+        <p>Usernames, emails, and password strength are checked server-side, and every query is parameterized against SQL injection.</p>
+      </div>
+      <div class="feature">
+        <h3>Sessions that expire</h3>
+        <p>Signed, HTTP-only session cookies with a 30-minute lifetime, plus a clean logout that clears everything.</p>
+      </div>
+      <div class="feature">
+        <h3>Optional two-factor</h3>
+        <p>Turn on TOTP-based 2FA from your dashboard and pair it with any authenticator app in under a minute.</p>
+      </div>
+    </div>
+  </section>
+</div>
+{% endblock %}

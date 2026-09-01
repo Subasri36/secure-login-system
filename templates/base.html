@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}Secure Login System{% endblock %}</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+
+  <nav class="nav">
+    <a href="{{ url_for('index') }}" class="nav__brand">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+        <rect x="4" y="10" width="16" height="11" rx="2" stroke="#C9A15A" stroke-width="1.6"/>
+        <path d="M7.5 10V7a4.5 4.5 0 0 1 9 0v3" stroke="#C9A15A" stroke-width="1.6"/>
+        <circle cx="12" cy="15" r="1.6" fill="#C9A15A"/>
+      </svg>
+      Vaultline
+    </a>
+    <div class="nav__links">
+      {% if session.get('user_id') %}
+        <a href="{{ url_for('dashboard') }}">Dashboard</a>
+        <span class="nav__user">@{{ session.get('username') }}</span>
+        <form action="{{ url_for('logout') }}" method="post" style="margin:0;">
+          <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+          <button class="btn-logout" type="submit">Log out</button>
+        </form>
+      {% else %}
+        <a href="{{ url_for('index') }}">Home</a>
+        <a href="{{ url_for('login') }}">Log in</a>
+        <a href="{{ url_for('register') }}" class="btn" style="width:auto; padding:9px 18px;">Sign up</a>
+      {% endif %}
+    </div>
+  </nav>
+
+  <main>
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        <div class="page" style="padding-top: 24px;">
+          <div class="flash-list">
+            {% for category, message in messages %}
+              <div class="flash flash-{{ category }}">{{ message }}</div>
+            {% endfor %}
+          </div>
+        </div>
+      {% endif %}
+    {% endwith %}
+
+    {% block content %}{% endblock %}
+  </main>
+
+  <footer>Secure Login System &mdash; built with Flask, bcrypt &amp; TOTP</footer>
+</body>
+</html>

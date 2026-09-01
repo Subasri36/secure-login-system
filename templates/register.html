@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% block title %}Sign up — Vaultline{% endblock %}
+{% block content %}
+<div class="center-shell">
+  <div class="card">
+    <div class="card__eyebrow">01 · CREATE ACCOUNT</div>
+    <h1 style="font-size:1.6rem;">Set up your vault</h1>
+    <p class="card__lede">Your password is hashed with bcrypt before it's stored — we never see it in plain text.</p>
+
+    <form method="post" action="{{ url_for('register') }}" novalidate>
+      <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+
+      <div class="field">
+        <label for="username">Username</label>
+        <input type="text" id="username" name="username" value="{{ username }}" placeholder="3-20 letters, numbers, underscore" required autofocus>
+      </div>
+
+      <div class="field">
+        <label for="email">Email</label>
+        <input type="email" id="email" name="email" value="{{ email }}" placeholder="you@example.com" required>
+      </div>
+
+      <div class="field">
+        <label for="password">Password</label>
+        <input type="password" id="password" name="password" placeholder="At least 8 characters" required>
+        <div class="field-hint">Needs an uppercase letter, a lowercase letter, a number, and a symbol.</div>
+      </div>
+
+      <div class="field">
+        <label for="confirm_password">Confirm password</label>
+        <input type="password" id="confirm_password" name="confirm_password" required>
+      </div>
+
+      <button type="submit" class="btn">Create account</button>
+    </form>
+
+    <div class="form-footer">Already have an account? <a href="{{ url_for('login') }}">Log in</a></div>
+  </div>
+</div>
+{% endblock %}

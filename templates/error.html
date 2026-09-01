@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+{% block title %}{{ code }} — Vaultline{% endblock %}
+{% block content %}
+<div class="error-shell">
+  <div class="code">ERROR {{ code }}</div>
+  <h1 style="font-size:1.8rem;">{{ message }}</h1>
+  <a href="{{ url_for('index') }}" class="btn" style="width:auto; padding:12px 24px;">Back to safety</a>
+</div>
+{% endblock %}

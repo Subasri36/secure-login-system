@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+{% block title %}Dashboard — Vaultline{% endblock %}
+{% block content %}
+<div class="page">
+  <div class="dash-grid">
+    <div>
+      <div class="card__eyebrow">DASHBOARD</div>
+      <h1 style="font-size:1.9rem;">Welcome, {{ user['username'] }}</h1>
+      <p style="color:var(--text-dim); margin:6px 0 30px;">Your account is protected and your session is active.</p>
+
+      <div class="panel">
+        <h3 style="font-size:1.05rem;">Account details</h3>
+        <div class="kv"><span class="kv__k">Username</span><span class="kv__v">{{ user['username'] }}</span></div>
+        <div class="kv"><span class="kv__k">Email</span><span class="kv__v">{{ user['email'] }}</span></div>
+        <div class="kv"><span class="kv__k">Member since</span><span class="kv__v">{{ user['created_at'][:10] }}</span></div>
+        <div class="kv">
+          <span class="kv__k">Two-factor authentication</span>
+          {% if user['totp_enabled'] %}
+            <span class="status-pill status-pill--on"><span class="dot"></span>Enabled</span>
+          {% else %}
+            <span class="status-pill status-pill--off"><span class="dot"></span>Disabled</span>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+
+    <div>
+      <div class="panel">
+        <h3 style="font-size:1.05rem;">Two-factor authentication</h3>
+        <p style="color:var(--text-dim); font-size:.88rem; margin:8px 0 18px;">
+          {% if user['totp_enabled'] %}
+            Your account requires a 6-digit code from your authenticator app at every login.
+          {% else %}
+            Add a second layer of protection with a time-based one-time code.
+          {% endif %}
+        </p>
+        {% if user['totp_enabled'] %}
+          <form method="post" action="{{ url_for('disable_2fa') }}">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+            <button type="submit" class="btn btn--danger">Disable 2FA</button>
+          </form>
+        {% else %}
+          <a href="{{ url_for('setup_2fa') }}" class="btn" style="text-align:center; text-decoration:none; display:block;">Enable 2FA</a>
+        {% endif %}
+      </div>
+
+      <div class="panel">
+        <h3 style="font-size:1.05rem;">Session</h3>
+        <p style="color:var(--text-dim); font-size:.88rem; margin:8px 0 18px;">
+          You'll be signed out automatically after 30 minutes of inactivity.
+        </p>
+        <form method="post" action="{{ url_for('logout') }}">
+          <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+          <button type="submit" class="btn--ghost btn">Log out now</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

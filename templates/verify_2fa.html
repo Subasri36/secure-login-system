@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block title %}Verify code — Vaultline{% endblock %}
+{% block content %}
+<div class="center-shell">
+  <div class="card">
+    <div class="card__eyebrow">STEP 2 OF 2</div>
+    <h1 style="font-size:1.6rem;">Enter your code</h1>
+    <p class="card__lede">Hi @{{ username }} — open your authenticator app and enter the 6-digit code for Vaultline.</p>
+
+    <form method="post" action="{{ url_for('verify_2fa') }}" novalidate>
+      <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+      <div class="field code-input">
+        <label for="code">Authentication code</label>
+        <input type="text" id="code" name="code" inputmode="numeric" pattern="[0-9]*" maxlength="6" placeholder="000000" required autofocus>
+      </div>
+      <button type="submit" class="btn">Verify &amp; continue</button>
+    </form>
+
+    <div class="form-footer"><a href="{{ url_for('login') }}">Cancel and log in as someone else</a></div>
+  </div>
+</div>
+{% endblock %}
